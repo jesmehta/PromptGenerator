@@ -91,16 +91,16 @@
       transformation: lists.transformations,
       elementals: lists.elementals,
       prompt: [
-        "#transformation.capitalize# your tool to make #object.a#.",
-        "#transformation.capitalize# your tool to make #object.a# for #audience.a#.",
-        "#transformation.capitalize# your tool to make #object.a#.",
-        "#transformation.capitalize# your tool to make #object.a# for #audience.a#.",
-        "#transformation.capitalize# your tool to make #object.a#.",
-        "#transformation.capitalize# your tool to make #object.a# for #audience.a#.",
-        "#transformation.capitalize# your tool to make #object.a#.",
-        "#transformation.capitalize# your tool to make #object.a# for #audience.a#.",
-        "#transformation.capitalize# your tool to make #object.a#.",
-        "#transformation.capitalize# your tool to make #object.a# for #audience.a#.",
+        "#transformation.capitalize# your chosen object to make #object.a#.",
+        "#transformation.capitalize# your chosen object to make #object.a# for #audience.a#.",
+        "#transformation.capitalize# your chosen object to make #object.a#.",
+        "#transformation.capitalize# your chosen object to make #object.a# for #audience.a#.",
+        "#transformation.capitalize# your chosen object to make #object.a#.",
+        "#transformation.capitalize# your chosen object to make #object.a# for #audience.a#.",
+        "#transformation.capitalize# your chosen object to make #object.a#.",
+        "#transformation.capitalize# your chosen object to make #object.a# for #audience.a#.",
+        "#transformation.capitalize# your chosen object to make #object.a#.",
+        "#transformation.capitalize# your chosen object to make #object.a# for #audience.a#.",
         "#elementals#"
       ]
     });
