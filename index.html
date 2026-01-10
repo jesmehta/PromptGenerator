@@ -28,18 +28,48 @@
       </div>
     </header>
 
-    <main>
-      <section class="card">
-        <div class="prompt">
-          <p class="promptText" id="promptText">Click “New prompt” to begin.</p>
-        </div>
+<main>
+  <section class="card">
+    <div class="prompt">
+      <p class="promptText" id="promptText">Click “New prompt” to begin.</p>
+    </div>
 
-        <div class="controls">
-          <button class="primary" id="newBtn">New prompt</button>
-          <button id="copyBtn">Copy</button>
-        </div>
-      </section>
-    </main>
+    <div class="controls">
+      <button class="primary" id="newBtn">New prompt</button>
+      <button id="copyBtn">Copy</button>
+    </div>
+  </section>
+
+  <section class="card editorCard">
+    <div class="editorHeader">
+      <h2 class="editorTitle">Lists</h2>
+      <div class="editorActions">
+        <button id="applyListsBtn" class="primary">Apply lists</button>
+        <button id="resetListsBtn">Reset defaults</button>
+      </div>
+    </div>
+
+    <div class="editorGrid">
+      <label class="editorField">
+        <span class="editorLabel">Objects (one per line)</span>
+        <textarea id="objectsTA" spellcheck="false"></textarea>
+      </label>
+
+      <label class="editorField">
+        <span class="editorLabel">Audiences (one per line)</span>
+        <textarea id="audiencesTA" spellcheck="false"></textarea>
+      </label>
+
+      <label class="editorField">
+        <span class="editorLabel">Transformations (one per line)</span>
+        <textarea id="transformationsTA" spellcheck="false"></textarea>
+      </label>
+    </div>
+
+    <p class="editorHint" id="editorHint"></p>
+  </section>
+</main>
+
 
     <div class="toast" id="toast">Copied.</div>
 

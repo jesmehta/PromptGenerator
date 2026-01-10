@@ -150,3 +150,78 @@ button.primary{ background:rgba(110,231,183,0.20); }
   justify-content:flex-end;
   margin-top:10px;
 }
+
+/* --- Editor --- */
+.editorCard { width: 100%; }
+
+.editorHeader{
+  display:flex;
+  justify-content:space-between;
+  align-items:flex-start;
+  gap:12px;
+  flex-wrap:wrap;
+}
+
+.editorTitle{
+  margin:0;
+  font-size:14px;
+  font-weight:800;
+  color:var(--text);
+}
+
+.editorActions{
+  display:flex;
+  gap:10px;
+  flex-wrap:wrap;
+  justify-content:flex-end;
+}
+
+.editorGrid{
+  display:grid;
+  grid-template-columns: 1fr;
+  gap:12px;
+}
+
+@media (min-width: 860px){
+  .editorGrid{
+    grid-template-columns: 1fr 1fr 1fr;
+  }
+}
+
+.editorField{
+  display:flex;
+  flex-direction:column;
+  gap:8px;
+}
+
+.editorLabel{
+  font-size:12px;
+  color:var(--muted);
+}
+
+textarea{
+  width:100%;
+  min-height: 180px;
+  resize: vertical;
+  padding: 12px 12px;
+  border-radius: 12px;
+  border: 1px solid rgba(255,255,255,0.14);
+  background: rgba(255,255,255,0.06);
+  color: rgba(255,255,255,0.92);
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 12px;
+  line-height: 1.35;
+  outline: none;
+}
+
+textarea:focus{
+  border-color: rgba(110,231,183,0.35);
+}
+
+.editorHint{
+  margin: 8px 0 0;
+  font-size: 12px;
+  color: var(--muted);
+  min-height: 1.2em;
+}
+
