@@ -1,0 +1,582 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Transformation Prompts — Random Card</title>
+
+  <!-- Optional: nice modern font (system + Inter fallback) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+
+  <style>
+    :root{
+      --bg: #0b0c10;
+      --panel: rgba(255,255,255,0.08);
+      --panel-2: rgba(255,255,255,0.10);
+      --text: rgba(255,255,255,0.92);
+      --muted: rgba(255,255,255,0.70);
+      --border: rgba(255,255,255,0.14);
+      --shadow: 0 10px 40px rgba(0,0,0,0.45);
+      --radius: 18px;
+    }
+
+    * { box-sizing: border-box; }
+    html, body { height: 100%; }
+    body{
+      margin:0;
+      font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      background: radial-gradient(1000px 700px at 20% 10%, rgba(110,231,183,0.12), transparent 60%),
+                  radial-gradient(900px 600px at 80% 20%, rgba(147,197,253,0.10), transparent 55%),
+                  radial-gradient(900px 700px at 50% 95%, rgba(251,113,133,0.10), transparent 60%),
+                  var(--bg);
+      color: var(--text);
+      overflow-x: hidden;
+    }
+
+    .wrap{
+      min-height: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 18px 14px 44px;
+      gap: 14px;
+    }
+
+    header{
+      width: min(980px, 100%);
+      display:flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      padding: 10px 6px;
+    }
+
+    .brand{
+      display:flex;
+      flex-direction: column;
+      gap: 2px;
+      min-width: 0;
+    }
+    .brand h1{
+      margin:0;
+      font-size: 16px;
+      letter-spacing: 0.2px;
+      font-weight: 800;
+      line-height: 1.1;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .brand p{
+      margin:0;
+      font-size: 12px;
+      color: var(--muted);
+      line-height: 1.2;
+    }
+
+    .toplinks{
+      display:flex;
+      align-items:center;
+      gap: 10px;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+    }
+
+    a.link{
+      color: var(--muted);
+      text-decoration: none;
+      border: 1px solid transparent;
+      padding: 8px 10px;
+      border-radius: 12px;
+      background: transparent;
+      transition: 120ms ease;
+      font-size: 13px;
+      line-height: 1;
+      user-select: none;
+      -webkit-tap-highlight-color: transparent;
+    }
+    a.link:hover{
+      color: var(--text);
+      background: rgba(255,255,255,0.06);
+      border-color: rgba(255,255,255,0.10);
+    }
+
+    main{
+      width: min(980px, 100%);
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 14px;
+      align-items: start;
+    }
+
+    .card{
+      background: linear-gradient(180deg, var(--panel), rgba(255,255,255,0.05));
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow);
+      border-radius: var(--radius);
+      padding: 22px 18px;
+    }
+
+    .prompt{
+      background: linear-gradient(180deg, rgba(255,255,255,0.11), rgba(255,255,255,0.06));
+      border: 1px solid rgba(255,255,255,0.14);
+      border-radius: calc(var(--radius) - 6px);
+      padding: 18px 16px;
+      min-height: 140px;
+
+      /* Mobile overflow fixes */
+      overflow: hidden;
+      word-break: break-word;
+      overflow-wrap: anywhere;
+    }
+
+    .promptText{
+      margin:0;
+      font-size: clamp(18px, 2.9vw, 28px);
+      font-weight: 700;
+      line-height: 1.18;
+      letter-spacing: 0.15px;
+    }
+
+    .subrow{
+      display:flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+      margin-top: 12px;
+      flex-wrap: wrap;
+    }
+
+    .meta{
+      font-size: 12px;
+      color: var(--muted);
+      display:flex;
+      gap: 12px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .pill{
+      display:inline-flex;
+      align-items:center;
+      gap: 6px;
+      padding: 6px 10px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,0.14);
+      background: rgba(255,255,255,0.06);
+      user-select: none;
+    }
+
+    .controls{
+      display:flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+      margin-top: 14px;
+    }
+
+    button{
+      border: 1px solid rgba(255,255,255,0.16);
+      background: rgba(255,255,255,0.08);
+      color: var(--text);
+      padding: 12px 14px;
+      border-radius: 14px;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: 120ms ease;
+      user-select: none;
+      -webkit-tap-highlight-color: transparent;
+    }
+    button:hover{ background: rgba(255,255,255,0.12); }
+    button:active{ transform: translateY(1px); }
+
+    button.primary{
+      background: rgba(110,231,183,0.16);
+      border-color: rgba(110,231,183,0.28);
+    }
+    button.primary:hover{
+      background: rgba(110,231,183,0.22);
+    }
+
+    .toast{
+      position: fixed;
+      left: 50%;
+      bottom: 18px;
+      transform: translateX(-50%);
+      background: rgba(0,0,0,0.75);
+      border: 1px solid rgba(255,255,255,0.18);
+      border-radius: 999px;
+      padding: 10px 14px;
+      color: rgba(255,255,255,0.92);
+      font-size: 13px;
+      opacity: 0;
+      pointer-events: none;
+      transition: 180ms ease;
+      max-width: calc(100vw - 24px);
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+    .toast.show{ opacity: 1; }
+
+    /* Modal (custom, with close button) */
+    .modalOverlay{
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.55);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 18px;
+      z-index: 9999;
+    }
+    .modalOverlay.show{ display: flex; }
+    .modal{
+      width: min(520px, 100%);
+      background: rgba(20,20,24,0.92);
+      border: 1px solid rgba(255,255,255,0.16);
+      border-radius: 18px;
+      box-shadow: 0 20px 70px rgba(0,0,0,0.55);
+      padding: 16px;
+    }
+    .modal h2{
+      margin: 4px 0 6px;
+      font-size: 16px;
+      font-weight: 800;
+    }
+    .modal p{
+      margin: 0 0 12px;
+      font-size: 14px;
+      color: rgba(255,255,255,0.86);
+      line-height: 1.35;
+    }
+    .modalActions{
+      display:flex;
+      justify-content: flex-end;
+      gap: 10px;
+      margin-top: 10px;
+    }
+
+    footer{
+      width: min(980px, 100%);
+      margin-top: 8px;
+      color: rgba(255,255,255,0.55);
+      font-size: 12px;
+      padding: 6px;
+      line-height: 1.35;
+    }
+    kbd{
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: 11px;
+      padding: 2px 6px;
+      border-radius: 6px;
+      border: 1px solid rgba(255,255,255,0.18);
+      background: rgba(255,255,255,0.06);
+      color: rgba(255,255,255,0.82);
+    }
+  </style>
+
+  <!-- Tracery -->
+  <script src="https://cdn.jsdelivr.net/npm/tracery-grammar@2.7.4/tracery.min.js"></script>
+</head>
+
+<body>
+  <div class="wrap">
+    <header>
+      <div class="brand">
+        <h1>Transformation Prompts</h1>
+        <p>Tracery-powered combinations • audience omitted ~50% of the time</p>
+      </div>
+
+      <div class="toplinks">
+        <a class="link" href="#" id="mainSiteLink" title="Redirects to a random Wikipedia page">Main site</a>
+        <a class="link" href="#" id="aboutLink" title="Keyboard shortcuts & tips">Help</a>
+      </div>
+    </header>
+
+    <main>
+      <section class="card">
+        <div class="prompt" aria-live="polite">
+          <p class="promptText" id="promptText">Click “New prompt” to begin.</p>
+
+          <div class="subrow">
+            <div class="meta">
+              <span class="pill" id="audiencePill" style="display:none;">Audience: <strong id="audienceValue"></strong></span>
+              <span class="pill">Clicks: <strong id="clickCount">0</strong></span>
+            </div>
+          </div>
+        </div>
+
+        <div class="controls">
+          <button class="primary" id="newBtn" title="Generate a new prompt (shortcut: N)">New prompt</button>
+          <button id="copyBtn" title="Copy the prompt to clipboard (shortcut: C)">Copy</button>
+          <button id="wikiBtn" title="Go to a random Wikipedia page (shortcut: W)">Random Wiki</button>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      Shortcuts: <kbd>N</kbd> new prompt • <kbd>C</kbd> copy • <kbd>W</kbd> random wiki • <kbd>Esc</kbd> close pop-up
+    </footer>
+
+    <div class="toast" id="toast">Copied.</div>
+
+    <!-- 8-click easter egg modal -->
+    <div class="modalOverlay" id="modalOverlay" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+      <div class="modal">
+        <h2 id="modalTitle">PSA</h2>
+        <p>You should go do your 20 sketches now.</p>
+        <div class="modalActions">
+          <button id="modalCloseBtn" class="primary">OK</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // ---------- Config ----------
+    const objects = [
+      "A rocket ship",
+      "A submarine",
+      "A vehicle",
+      "Footwear",
+      "Furniture",
+      "Jewellery",
+      "Chair",
+      "Table",
+      "Children's park play - a slide or seesaw, etc",
+      "Stuffed toy",
+      "Weapon",
+      "Game board"
+    ];
+
+    const audiences = [
+      "Mouse",
+      "Duck",
+      "Angel",
+      "Werewolf",
+      "Alien",
+      "Robot",
+      "Eagle"
+    ];
+
+    const transformations = [
+      "Shrink",
+      "Enlarge",
+      "Bend",
+      "Twist",
+      "Stretch",
+      "Flatten",
+      "Inflate",
+      "Deflate",
+      "Sharpen",
+      "Round off",
+      "Melt",
+      "Crystallize"
+    ];
+
+    // Pick 1–3 transformations, joined nicely
+    function pickOps() {
+      const count = 1 + Math.floor(Math.random() * 3); // 1..3
+      const pool = transformations.slice();
+      const chosen = [];
+      for (let i = 0; i < count; i++) {
+        const idx = Math.floor(Math.random() * pool.length);
+        chosen.push(pool.splice(idx, 1)[0]);
+      }
+      if (chosen.length === 1) return chosen[0];
+      if (chosen.length === 2) return `${chosen[0]} and ${chosen[1]}`;
+      return `${chosen[0]}, ${chosen[1]}, and ${chosen[2]}`;
+    }
+
+    // ---------- Tracery Grammar ----------
+    // 50% audience missing (assume human)
+    const grammar = tracery.createGrammar({
+      object: objects,
+      audience: audiences,
+      ops: ["#opsOneToThree#"],
+      opsOneToThree: [() => pickOps()],
+      prompt: [
+        "#ops# your tool to make #object#.",
+        "#ops# your tool to make #object# for #audience#."
+      ]
+    });
+    grammar.addModifiers(tracery.baseEngModifiers);
+
+    // ---------- UI State ----------
+    let clickCount = 0;
+    let newPromptStreak = 0; // streak of consecutive "New prompt" clicks
+    let lastActionWasNew = false;
+
+    const promptTextEl = document.getElementById("promptText");
+    const clickCountEl = document.getElementById("clickCount");
+    const toastEl = document.getElementById("toast");
+
+    const audiencePill = document.getElementById("audiencePill");
+    const audienceValue = document.getElementById("audienceValue");
+
+    const modalOverlay = document.getElementById("modalOverlay");
+    const modalCloseBtn = document.getElementById("modalCloseBtn");
+
+    function showToast(msg) {
+      toastEl.textContent = msg;
+      toastEl.classList.add("show");
+      window.clearTimeout(showToast._t);
+      showToast._t = window.setTimeout(() => toastEl.classList.remove("show"), 1200);
+    }
+
+    function openModal() {
+      modalOverlay.classList.add("show");
+    }
+    function closeModal() {
+      modalOverlay.classList.remove("show");
+    }
+
+    function randomWikiUrl() {
+      // Wikipedia built-in random page
+      return "https://en.wikipedia.org/wiki/Special:Random";
+    }
+
+    // Generate prompt with 50% audience omission (forced here, independent of tracery choices)
+    function generatePrompt() {
+      // Decide whether to include audience
+      const includeAudience = Math.random() < 0.5 ? false : true;
+
+      // Build using tracery pieces (still “Tracery-powered”, but we control the 50% rule precisely)
+      const obj = grammar.flatten("#object#");
+      const ops = pickOps();
+      let text, aud = null;
+
+      if (!includeAudience) {
+        text = `${ops} your tool to make ${obj}.`;
+      } else {
+        aud = grammar.flatten("#audience#");
+        text = `${ops} your tool to make ${obj} for ${aud}.`;
+      }
+
+      // Update UI
+      promptTextEl.textContent = text;
+
+      if (aud) {
+        audienceValue.textContent = aud;
+        audiencePill.style.display = "inline-flex";
+      } else {
+        audiencePill.style.display = "none";
+      }
+
+      clickCount++;
+      clickCountEl.textContent = String(clickCount);
+
+      return text;
+    }
+
+    // ---------- Actions ----------
+    function onNewPrompt() {
+      generatePrompt();
+
+      // Track streak of consecutive NEW clicks (resets if user does something else)
+      if (lastActionWasNew) newPromptStreak += 1;
+      else newPromptStreak = 1;
+
+      lastActionWasNew = true;
+
+      if (newPromptStreak === 8) {
+        openModal();
+        // keep streak going if they keep clicking; or reset here if you prefer:
+        // newPromptStreak = 0;
+      }
+    }
+
+    async function onCopy() {
+      lastActionWasNew = false;
+
+      const text = promptTextEl.textContent.trim();
+      if (!text || text === "Click “New prompt” to begin.") {
+        showToast("Nothing to copy yet.");
+        return;
+      }
+
+      try {
+        await navigator.clipboard.writeText(text);
+        showToast("Copied!");
+      } catch (e) {
+        // Fallback
+        const ta = document.createElement("textarea");
+        ta.value = text;
+        document.body.appendChild(ta);
+        ta.select();
+        document.execCommand("copy");
+        document.body.removeChild(ta);
+        showToast("Copied!");
+      }
+    }
+
+    function onRandomWiki() {
+      lastActionWasNew = false;
+      window.location.href = randomWikiUrl();
+    }
+
+    // "Main site" link redirects to random Wikipedia page (as requested)
+    document.getElementById("mainSiteLink").addEventListener("click", (e) => {
+      e.preventDefault();
+      onRandomWiki();
+    });
+
+    document.getElementById("aboutLink").addEventListener("click", (e) => {
+      e.preventDefault();
+      lastActionWasNew = false;
+      openModal();
+      // tweak modal text for help when opened via Help link
+      document.getElementById("modalTitle").textContent = "Help";
+      modalOverlay.querySelector("p").textContent =
+        "Shortcuts: N = new prompt, C = copy, W = random wiki, Esc = close.\n\n(And yes — 8 consecutive “New prompt” clicks triggers the sketching PSA.)";
+    });
+
+    // Restore PSA text when modal opened by streak
+    function setPSAText() {
+      document.getElementById("modalTitle").textContent = "PSA";
+      modalOverlay.querySelector("p").textContent = "You should go do your 20 sketches now.";
+    }
+
+    document.getElementById("newBtn").addEventListener("click", () => {
+      setPSAText();
+      onNewPrompt();
+    });
+
+    document.getElementById("copyBtn").addEventListener("click", onCopy);
+    document.getElementById("wikiBtn").addEventListener("click", onRandomWiki);
+
+    modalCloseBtn.addEventListener("click", closeModal);
+    modalOverlay.addEventListener("click", (e) => {
+      if (e.target === modalOverlay) closeModal();
+    });
+
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape") {
+        closeModal();
+        return;
+      }
+      if (e.key.toLowerCase() === "n") {
+        setPSAText();
+        onNewPrompt();
+      } else if (e.key.toLowerCase() === "c") {
+        onCopy();
+      } else if (e.key.toLowerCase() === "w") {
+        onRandomWiki();
+      }
+    });
+
+    // If user does something else, break the streak
+    ["copyBtn", "wikiBtn", "mainSiteLink", "aboutLink"].forEach(id => {
+      const el = document.getElementById(id);
+      if (el) el.addEventListener("click", () => { lastActionWasNew = false; });
+    });
+
+    // Start with an initial prompt (optional)
+    onNewPrompt();
+  </script>
+</body>
+</html>
