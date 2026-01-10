@@ -3,235 +3,16 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Transformation Prompts — Random Card</title>
+  <title>Transformation Prompts</title>
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
 
-  <style>
-    :root{
-      --bg: #0b0c10;
-      --panel: rgba(255,255,255,0.08);
-      --text: rgba(255,255,255,0.92);
-      --muted: rgba(255,255,255,0.70);
-      --border: rgba(255,255,255,0.14);
-      --shadow: 0 10px 40px rgba(0,0,0,0.45);
-      --radius: 18px;
-    }
+  <link rel="stylesheet" href="style.css">
 
-    * { box-sizing: border-box; }
-    html, body { height: 100%; }
-    body{
-      margin:0;
-      font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
-      background: radial-gradient(1000px 700px at 20% 10%, rgba(110,231,183,0.12), transparent 60%),
-                  radial-gradient(900px 600px at 80% 20%, rgba(147,197,253,0.10), transparent 55%),
-                  radial-gradient(900px 700px at 50% 95%, rgba(251,113,133,0.10), transparent 60%),
-                  var(--bg);
-      color: var(--text);
-      overflow-x: hidden;
-    }
-
-    .wrap{
-      min-height: 100%;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      padding: 18px 14px 44px;
-      gap: 14px;
-    }
-
-    header{
-      width: min(980px, 100%);
-      display:flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 12px;
-      padding: 10px 6px;
-    }
-
-    .brand{
-      display:flex;
-      flex-direction: column;
-      gap: 2px;
-      min-width: 0;
-    }
-    .brand h1{
-      margin:0;
-      font-size: 16px;
-      letter-spacing: 0.2px;
-      font-weight: 800;
-      line-height: 1.1;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
-    .brand p{
-      margin:0;
-      font-size: 12px;
-      color: var(--muted);
-      line-height: 1.2;
-    }
-
-    .toplinks{
-      display:flex;
-      align-items:center;
-      gap: 10px;
-      flex-wrap: wrap;
-      justify-content: flex-end;
-    }
-
-    a.link{
-      color: var(--muted);
-      text-decoration: none;
-      border: 1px solid transparent;
-      padding: 8px 10px;
-      border-radius: 12px;
-      background: transparent;
-      transition: 120ms ease;
-      font-size: 13px;
-      line-height: 1;
-      user-select: none;
-      -webkit-tap-highlight-color: transparent;
-    }
-    a.link:hover{
-      color: var(--text);
-      background: rgba(255,255,255,0.06);
-      border-color: rgba(255,255,255,0.10);
-    }
-
-    main{
-      width: min(980px, 100%);
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: 14px;
-      align-items: start;
-    }
-
-    .card{
-      background: linear-gradient(180deg, var(--panel), rgba(255,255,255,0.05));
-      border: 1px solid var(--border);
-      box-shadow: var(--shadow);
-      border-radius: var(--radius);
-      padding: 22px 18px;
-    }
-
-    .prompt{
-      background: linear-gradient(180deg, rgba(255,255,255,0.11), rgba(255,255,255,0.06));
-      border: 1px solid rgba(255,255,255,0.14);
-      border-radius: calc(var(--radius) - 6px);
-      padding: 18px 16px;
-      min-height: 140px;
-
-      /* mobile overflow safety */
-      overflow: hidden;
-      word-break: break-word;
-      overflow-wrap: anywhere;
-    }
-
-    .promptText{
-      margin:0;
-      font-size: clamp(18px, 2.9vw, 28px);
-      font-weight: 700;
-      line-height: 1.18;
-      letter-spacing: 0.15px;
-    }
-
-    .controls{
-      display:flex;
-      gap: 10px;
-      flex-wrap: wrap;
-      justify-content: flex-end;
-      margin-top: 14px;
-    }
-
-    button{
-      border: 1px solid rgba(255,255,255,0.16);
-      background: rgba(255,255,255,0.08);
-      color: var(--text);
-      padding: 12px 14px;
-      border-radius: 14px;
-      font-size: 14px;
-      font-weight: 600;
-      cursor: pointer;
-      transition: 120ms ease;
-      user-select: none;
-      -webkit-tap-highlight-color: transparent;
-    }
-    button:hover{ background: rgba(255,255,255,0.12); }
-    button:active{ transform: translateY(1px); }
-
-    button.primary{
-      background: rgba(110,231,183,0.16);
-      border-color: rgba(110,231,183,0.28);
-    }
-    button.primary:hover{
-      background: rgba(110,231,183,0.22);
-    }
-
-    .toast{
-      position: fixed;
-      left: 50%;
-      bottom: 18px;
-      transform: translateX(-50%);
-      background: rgba(0,0,0,0.75);
-      border: 1px solid rgba(255,255,255,0.18);
-      border-radius: 999px;
-      padding: 10px 14px;
-      color: rgba(255,255,255,0.92);
-      font-size: 13px;
-      opacity: 0;
-      pointer-events: none;
-      transition: 180ms ease;
-      max-width: calc(100vw - 24px);
-      overflow: hidden;
-      text-overflow: ellipsis;
-      white-space: nowrap;
-    }
-    .toast.show{ opacity: 1; }
-
-    /* Modal (custom, with close button) */
-    .modalOverlay{
-      position: fixed;
-      inset: 0;
-      background: rgba(0,0,0,0.55);
-      display: none;
-      align-items: center;
-      justify-content: center;
-      padding: 18px;
-      z-index: 9999;
-    }
-    .modalOverlay.show{ display: flex; }
-    .modal{
-      width: min(520px, 100%);
-      background: rgba(20,20,24,0.92);
-      border: 1px solid rgba(255,255,255,0.16);
-      border-radius: 18px;
-      box-shadow: 0 20px 70px rgba(0,0,0,0.55);
-      padding: 16px;
-    }
-    .modal h2{
-      margin: 4px 0 6px;
-      font-size: 16px;
-      font-weight: 800;
-    }
-    .modal p{
-      margin: 0 0 12px;
-      font-size: 14px;
-      color: rgba(255,255,255,0.86);
-      line-height: 1.35;
-    }
-    .modalActions{
-      display:flex;
-      justify-content: flex-end;
-      gap: 10px;
-      margin-top: 10px;
-    }
-  </style>
-
-  <!-- Tracery -->
   <script src="https://cdn.jsdelivr.net/npm/tracery-grammar@2.7.4/tracery.min.js"></script>
+  
 </head>
 
 <body>
@@ -243,13 +24,13 @@
       </div>
 
       <div class="toplinks">
-        <a class="link" href="#" id="mainSiteLink" title="Go somewhere else (random Wikipedia)">Main site</a>
+        <a class="link" href="#" id="mainSiteLink">Main site</a>
       </div>
     </header>
 
     <main>
       <section class="card">
-        <div class="prompt" aria-live="polite">
+        <div class="prompt">
           <p class="promptText" id="promptText">Click “New prompt” to begin.</p>
         </div>
 
@@ -262,10 +43,9 @@
 
     <div class="toast" id="toast">Copied.</div>
 
-    <!-- 8-click easter egg modal -->
-    <div class="modalOverlay" id="modalOverlay" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+    <div class="modalOverlay" id="modalOverlay">
       <div class="modal">
-        <h2 id="modalTitle">PSA</h2>
+        <h2>PSA</h2>
         <p>You should go do your 20 sketches now.</p>
         <div class="modalActions">
           <button id="modalCloseBtn" class="primary">OK</button>
@@ -274,155 +54,6 @@
     </div>
   </div>
 
-  <script>
-    // ---------- Lists ----------
-    const objects = [
-      "rocket ship",
-      "submarine",
-      "vehicle",
-      "footwear",
-      "furniture",
-      "jewellery",
-      "chair",
-      "table",
-      "children's park play (a slide or seesaw, etc)",
-      "stuffed toy",
-      "weapon",
-      "game board"
-    ];
-
-    const audiences = [
-      "mouse",
-      "duck",
-      "angel",
-      "werewolf",
-      "alien",
-      "robot",
-      "eagle"
-    ];
-
-    const transformations = [
-      "shrink",
-      "enlarge",
-      "bend",
-      "twist",
-      "stretch",
-      "flatten",
-      "inflate",
-      "deflate",
-      "sharpen",
-      "round off",
-      "melt",
-      "crystallize"
-    ];
-
-    // ---------- Tracery Grammar ----------
-    // 50% chance audience is omitted (assumed human)
-    const grammar = tracery.createGrammar({
-      object: objects,
-      audience: audiences,
-      transformation: transformations,
-      prompt: [
-        "#transformation.capitalize# your tool to make #a.object#.",
-        "#transformation.capitalize# your tool to make #a.object# for #a.audience#."
-      ]
-    });
-
-    // Base modifiers include: capitalize, a/an (#a#), etc.
-    // grammar.addModifiers(tracery.baseEngModifiers);
-
-    // ---------- UI ----------
-    const promptTextEl = document.getElementById("promptText");
-    const toastEl = document.getElementById("toast");
-
-    const modalOverlay = document.getElementById("modalOverlay");
-    const modalCloseBtn = document.getElementById("modalCloseBtn");
-
-    let newPromptStreak = 0;
-
-    function showToast(msg) {
-      toastEl.textContent = msg;
-      toastEl.classList.add("show");
-      window.clearTimeout(showToast._t);
-      showToast._t = window.setTimeout(() => toastEl.classList.remove("show"), 1200);
-    }
-
-    function openModal() { modalOverlay.classList.add("show"); }
-    function closeModal() { modalOverlay.classList.remove("show"); }
-
-    function randomWikiUrl() {
-      return "https://en.wikipedia.org/wiki/Special:Random";
-    }
-
-    function generatePrompt() {
-      // Enforce 50% omission cleanly
-      const includeAudience = Math.random() >= 0.5;
-
-      const rule = includeAudience
-        ? "#transformation.capitalize# your tool to make #a.object# for #a.audience#."
-        : "#transformation.capitalize# your tool to make #a.object#.";
-
-      const text = grammar.flatten(rule);
-      promptTextEl.textContent = text;
-      return text;
-    }
-
-    function onNewPrompt() {
-      generatePrompt();
-      newPromptStreak += 1;
-
-      if (newPromptStreak === 8) {
-        openModal();
-        // keep counting after 8; if you want it to re-trigger every 8, uncomment:
-        // newPromptStreak = 0;
-      }
-    }
-
-    async function onCopy() {
-      const text = promptTextEl.textContent.trim();
-      if (!text || text === "Click “New prompt” to begin.") {
-        showToast("Nothing to copy yet.");
-        return;
-      }
-
-      try {
-        await navigator.clipboard.writeText(text);
-        showToast("Copied!");
-      } catch (e) {
-        // Fallback
-        const ta = document.createElement("textarea");
-        ta.value = text;
-        document.body.appendChild(ta);
-        ta.select();
-        document.execCommand("copy");
-        document.body.removeChild(ta);
-        showToast("Copied!");
-      }
-    }
-
-    // Main site -> random Wikipedia
-    document.getElementById("mainSiteLink").addEventListener("click", (e) => {
-      e.preventDefault();
-      window.location.href = randomWikiUrl();
-    });
-
-    document.getElementById("newBtn").addEventListener("click", () => {
-      onNewPrompt();
-    });
-
-    document.getElementById("copyBtn").addEventListener("click", () => {
-      // Copy breaks the streak (so it's "8 new prompts in a row")
-      newPromptStreak = 0;
-      onCopy();
-    });
-
-    modalCloseBtn.addEventListener("click", closeModal);
-    modalOverlay.addEventListener("click", (e) => {
-      if (e.target === modalOverlay) closeModal();
-    });
-
-    // Start with an initial prompt
-    onNewPrompt();
-  </script>
+  <script src="app.js"></script>
 </body>
 </html>
