@@ -16,7 +16,7 @@
       "jewellery",
       "chair",
       "table",
-      "children's park playthings",
+      "children's park plaything",
       "stuffed toy",
       "weapon",
       "game board"
@@ -35,6 +35,9 @@
     transformations: [
       "shrink", "enlarge", "bend", "twist", "stretch", "flatten",
       "inflate", "deflate", "sharpen", "round off", "melt", "crystallize"
+    ],
+    elementals: [
+        "FIRE", "WATER", "EARTH", "WIND", "RUN", "JUMP", "SLEEP", "GO WASH YOUR FACE"
     ]
   };
 
@@ -86,9 +89,19 @@
       object: lists.objects,
       audience: lists.audiences,
       transformation: lists.transformations,
+      elementals: lists.elementals,
       prompt: [
         "#transformation.capitalize# your tool to make #object.a#.",
-        "#transformation.capitalize# your tool to make #object.a# for #audience.a#."
+        "#transformation.capitalize# your tool to make #object.a# for #audience.a#.",
+        "#transformation.capitalize# your tool to make #object.a#.",
+        "#transformation.capitalize# your tool to make #object.a# for #audience.a#.",
+        "#transformation.capitalize# your tool to make #object.a#.",
+        "#transformation.capitalize# your tool to make #object.a# for #audience.a#.",
+        "#transformation.capitalize# your tool to make #object.a#.",
+        "#transformation.capitalize# your tool to make #object.a# for #audience.a#.",
+        "#transformation.capitalize# your tool to make #object.a#.",
+        "#transformation.capitalize# your tool to make #object.a# for #audience.a#.",
+        "#elementals#"
       ]
     });
     g.addModifiers(tracery.baseEngModifiers);
