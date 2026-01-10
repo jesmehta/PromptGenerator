@@ -254,3 +254,12 @@ textarea:focus{
   margin-top: 0;
 }
 
+.siteFooter{
+  margin-top: auto;              /* <- this is the key */
+  padding-top: 18px;
+  font-size: 11px;
+  color: rgba(255,255,255,0.45);
+  text-align: center;
+  letter-spacing: 0.2px;
+}
+
